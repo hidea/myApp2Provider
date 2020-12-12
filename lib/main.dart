@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
@@ -57,6 +57,7 @@ class MyHomePage extends StatefulWidget {
 
   final String title;
 
+/*
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -75,9 +76,8 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;      
     });
     */
-
-    context.read<MyModel>().increment();
   }
+*/
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text(title),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -116,19 +116,29 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'You have pushed the button this many times:',
             ),
-            Text(
-              //'$_counter',
-              '${context.watch<MyModel>().counter}',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            Counter(),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        //onPressed: _incrementCounter,
+        onPressed: () => context.read<MyModel>().increment(),
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class Counter extends StatelessWidget {
+  const Counter({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      //'$_counter',
+      '${context.watch<MyModel>().counter}',
+      style: Theme.of(context).textTheme.headline4,
     );
   }
 }
